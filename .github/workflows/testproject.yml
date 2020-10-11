@@ -38,6 +38,7 @@ jobs:
       - name: release
         run:  |
           cd lede
+          git log -1 --format=%cd
           echo -n "$(git log -1 --format=%cd)" |md5sum >>md5
           cd ../ && rm -rf lede
 
