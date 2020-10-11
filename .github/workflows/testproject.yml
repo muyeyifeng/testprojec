@@ -34,6 +34,14 @@ jobs:
       - name: Clone source code
         run:  |
           git clone  https://github.com/coolsnowwolf/lede
+          git clone  https://github.com/muyeyifeng/Actions-Build-Lede-Public
+
+      - name: Update feeds
+        run: |
+          mv ./Actions-Build-Lede-Public/feeds.conf.default ./lede/feeds.conf.default
+          cd lede
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
 
       - name: release
         run:  |
