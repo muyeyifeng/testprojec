@@ -30,12 +30,20 @@ jobs:
       - name: Show Last md5
         run:  |
           cat md5 | tail -n 1 |awk '{print $1}'
-          echo `::stop-commands::pause-logging`
 
       - name: Clone source code
         run:  |
           git clone  https://github.com/coolsnowwolf/lede
           git clone  https://github.com/muyeyifeng/Actions-Build-Lede-Public
+
+      - name: release
+        run:  |
+          cd lede
+          git log -1 --format=%cd
+          echo -n "$(git log -1 --format=%cd)" |md5sum > tmpmd5
+          if [[ "$(cat ../md5 | tail -n 1 |awk '{print $1}')" == "$(cat tmpmd5| tail -n 1 |awk '{print $1}')" ]];then echo "true"; fi
+          echo -n "$(git log -1 --format=%cd)" |md5sum >> ../md5
+          cd ../ && rm -rf lede Actions-Build-Lede-Public
 
       - name: Space cleanup
         env:
@@ -61,13 +69,6 @@ jobs:
           cd lede
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-
-      - name: release
-        run:  |
-          cd lede
-          git log -1 --format=%cd
-          echo -n "$(git log -1 --format=%cd)" |md5sum >> ../md5
-          cd ../ && rm -rf lede Actions-Build-Lede-Public
 
       - name: Upload release asset
         uses: svenstaro/upload-release-action@v2
