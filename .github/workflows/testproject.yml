@@ -51,7 +51,7 @@ jobs:
       - name: Space cleanup
         env:
           DEBIAN_FRONTEND: noninteractive
-        if: env.action_state == run 
+        if: env.action_state == "run" 
         run: |
           echo  $DOCKER_REGISTRY_URL"lede-"${{ matrix.db-backend }}:latest
           docker rmi `docker images -q`
