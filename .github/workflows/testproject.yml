@@ -27,9 +27,9 @@ jobs:
           ref: main
           fetch-depth: 1000000
 
-      - name: Space cleanup
+      - name: Show Last md5
         run:  |
-          sudo -E apt-get install git
+          cat md5 | tail -n 1 |awk '{print $1}'
 
       - name: Clone source code
         run:  |
@@ -65,7 +65,7 @@ jobs:
           cd lede
           git log -1 --format=%cd
           echo -n "$(git log -1 --format=%cd)" |md5sum >> ../md5
-          cd ../ && rm -rf lede
+          cd ../ && rm -rf lede Actions-Build-Lede-Public
 
       - name: Upload release asset
         uses: svenstaro/upload-release-action@v2
@@ -93,10 +93,10 @@ jobs:
           rm -rf github.pem
           if( ${{ github.event_name == 'push' }} );then
             git add -f .
-            git commit --no-verify -m "Add  md5" 
+            git commit --no-verify -m "Add md5" 
           else
             git add .
-            git commit -m "Add  md5" 
+            git commit -m "Add md5" 
           fi
           echo "============ git push ============"
           git push
