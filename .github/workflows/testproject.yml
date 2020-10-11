@@ -37,8 +37,8 @@ jobs:
 
       - name: release
         run:  |
-          tar -czf lede.tar lede
-          md5sum lede.tar >> md5
+          cd lede
+          echo -n "$(git log -1 --format=%cd)" |md5sum >>md5
           rm -rf lede
 
       - name: Upload release asset
