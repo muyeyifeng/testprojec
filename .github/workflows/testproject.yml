@@ -67,10 +67,10 @@ jobs:
           rm -rf github.pem
           if( ${{ github.event_name == 'push' }} );then
             git add -f .
-            git commit --no-verify -m "Add md5" 
+            git commit --no-verify -m "Add  md5" 
           else
             git add .
-            git commit -m "Add md5" 
+            git commit -m "Add  md5" 
           fi
           echo "============ git push ============"
           git push
