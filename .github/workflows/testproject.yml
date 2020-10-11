@@ -30,6 +30,7 @@ jobs:
       - name: Show Last md5
         run:  |
           cat md5 | tail -n 1 |awk '{print $1}'
+          echo "::stop-commands::pause-logging"
 
       - name: Clone source code
         run:  |
