@@ -49,7 +49,7 @@ jobs:
           cd ../ && rm -rf lede Actions-Build-Lede-Public
 
       - name: Space cleanup
-        if: ${{ action_state=="run" }}
+        if: ${GITHUB_EMAIL} == "run" 
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
