@@ -11,6 +11,7 @@ on:
     paths-ignore:
       - "md5"
 env:
+  action_state: run
   GITHUB_EMAIL: muyeyifeng@gmail.com	#email
   GITHUB_USER: muyeyifeng
 
@@ -48,6 +49,7 @@ jobs:
           cd ../ && rm -rf lede Actions-Build-Lede-Public
 
       - name: Space cleanup
+        if: ${{ action_state=="run" }}
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
