@@ -36,6 +36,23 @@ jobs:
           git clone  https://github.com/coolsnowwolf/lede
           git clone  https://github.com/muyeyifeng/Actions-Build-Lede-Public
 
+      - name: Space cleanup
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          echo  $DOCKER_REGISTRY_URL"lede-"${{ matrix.db-backend }}:latest
+          docker rmi `docker images -q`
+          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+          sudo -E apt-get update
+          #=========================
+          echo "$(cat lede/README.md |grep 'sudo apt-get' | sed -n 2p)"
+          $(cat lede/README.md |grep "sudo apt-get" | sed -n 2p)
+          sudo -E apt-get -y install tree
+          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+          df -h
+
       - name: Update feeds
         run: |
           mv ./Actions-Build-Lede-Public/feeds.conf.default ./lede/feeds.conf.default
