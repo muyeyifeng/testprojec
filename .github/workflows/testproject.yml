@@ -41,7 +41,7 @@ jobs:
           cd lede
           git log -1 --format=%cd
           echo -n "$(git log -1 --format=%cd)" |md5sum > tmpmd5
-          if [[ "$(cat ../md5 | tail -n 1 |awk '{print $1}')" == "$(cat tmpmd5| tail -n 1 |awk '{print $1}')" ]];then  echo "::set-env name=action_state::cancel" ; fi
+          if [[ "$(cat ../md5 | tail -n 1 |awk '{print $1}')" == "$(cat tmpmd5| tail -n 1 |awk '{print $1}')" ]];then  echo "action_state=cancel" >> $GITHUB_ENV ; fi
           echo -n "$(git log -1 --format=%cd)" |md5sum >> ../md5
           cd ../ && rm -rf lede Actions-Build-Lede-Public
 
