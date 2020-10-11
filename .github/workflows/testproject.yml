@@ -36,12 +36,12 @@ jobs:
           git clone  https://github.com/coolsnowwolf/lede
           git clone  https://github.com/muyeyifeng/Actions-Build-Lede-Public
 
-      - name: release
+      - name: Check Lastest
         run:  |
           cd lede
           git log -1 --format=%cd
           echo -n "$(git log -1 --format=%cd)" |md5sum > tmpmd5
-          if [[ "$(cat ../md5 | tail -n 1 |awk '{print $1}')" == "$(cat tmpmd5| tail -n 1 |awk '{print $1}')" ]];then echo Cancel ; fi
+          if [[ "$(cat ../md5 | tail -n 1 |awk '{print $1}')" == "$(cat tmpmd5| tail -n 1 |awk '{print $1}')" ]];then  Cancel ; fi
           echo -n "$(git log -1 --format=%cd)" |md5sum >> ../md5
           cd ../ && rm -rf lede Actions-Build-Lede-Public
 
