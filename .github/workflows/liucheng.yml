@@ -17,4 +17,4 @@ jobs:
 
       - name: Show Last md5
         run:  |
-          echo ${{ GITHUB_EVENT_NAME  }}
+          echo "${{ github.event }}"
