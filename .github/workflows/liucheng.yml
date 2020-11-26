@@ -16,5 +16,6 @@ jobs:
           fetch-depth: 1000000
 
       - name: Show Last md5
+        if: ${{ github.event_name }}=='push'
         run:  |
           echo ${{ github.event_name }}=='push'
