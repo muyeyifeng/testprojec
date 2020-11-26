@@ -17,4 +17,4 @@ jobs:
 
       - name: Show Last md5
         run:  |
-          echo "${{ github.event_name }}"
+          echo ${{ github.event_name }}=='push'
